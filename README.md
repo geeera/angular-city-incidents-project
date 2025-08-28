@@ -57,3 +57,31 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Running ESLint
+
+For eslint checking, run:
+
+```bash
+npm run lint
+```
+
+For eslint fixing, run:
+
+```bash
+npm run lint:fix
+```
+
+## Running Prettier
+
+For prettier checking, run:
+
+```bash
+npm run format:check
+```
+
+For prettier fixing, run:
+
+```bash
+npm run format
+```
