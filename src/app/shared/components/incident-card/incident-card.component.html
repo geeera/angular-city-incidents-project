@@ -1,1 +1,27 @@
-<p>incident-card works!</p>
+<mat-card style="background: none;" appearance="outlined">
+  <mat-card-header>
+    <div mat-card-avatar [class]="'severity-' + incident.severity">
+      <mat-icon>{{ ICONS_MAP[incident.iconCategory] }}</mat-icon>
+    </div>
+    <mat-card-title>{{ incident.title }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="wrapper">
+      <div class="box">
+        <h3>Category:</h3> <span>{{ incident.category }}</span>
+      </div>
+      <div class="box">
+        <h3>Severity: </h3> <span>{{ incident.severity }}/5</span>
+      </div>
+      <div class="box">
+        <h3>Created at: </h3> <span>{{ incident.createdAt | date }}</span>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button
+      mat-button
+      [routerLink]="['incident', incident.id]"
+    >Details</button>
+  </mat-card-actions>
+</mat-card>

@@ -1,1 +1,27 @@
-<ci-map></ci-map>
+@if (viewData$ | async; as viewData) {
+  <ci-map
+    [incidents]="viewData.filteredIncidents"
+    [center]="viewData.center"
+    [zoom]="viewData.selectedIncident ? 20 : 15"
+  ></ci-map>
+  <ci-incidents-table
+    [incidents]="viewData.filteredIncidents"
+    (rowClicked)="zoomToIncident($event)"
+    class="table"
+  ></ci-incidents-table>
+
+  <ci-incidents-filter
+    class="filter"
+    (filteredApply)="handleFilter($event)"
+  ></ci-incidents-filter>
+
+  @if (viewData.selectedIncident) {
+    <button
+      mat-fab
+      class="zoom-out--btn blur"
+      (click)="clearSelectedIncident()"
+    >
+      <mat-icon>zoom_out_map</mat-icon>
+    </button>
+  }
+}

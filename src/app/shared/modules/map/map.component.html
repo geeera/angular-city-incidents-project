@@ -1,1 +1,41 @@
-<p>map works!</p>
+<mgl-map
+  #mapRef
+  [style]="'mapbox://styles/mapbox/streets-v12'"
+  [zoom]="zoom"
+  [center]="center"
+>
+  <mgl-geojson-source
+    #clusterComponent
+    id="incidentsSource"
+    [data]="incidents | incidentToGeoFeatureCollection"
+    [cluster]="true"
+    [clusterRadius]="20"
+    [generateId]="true"
+  ></mgl-geojson-source>
+  <mgl-markers-for-clusters
+    source="incidentsSource"
+  >
+    <ng-template mglPoint let-feature>
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        [title]="feature.properties.title"
+        [class]="'severity-' + feature.properties.severity"
+      >
+        <mat-icon>{{ ICONS_MAP[feature.properties.iconCategory] }}</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu" class="clear-menu blur">
+        <ci-incident-card
+          [incident]="feature.properties"
+        ></ci-incident-card>
+      </mat-menu>
+    </ng-template>
+
+    <ng-template mglClusterPoint let-feature>
+      <button mat-icon-button>
+        {{ feature.properties.point_count }}
+      </button>
+    </ng-template>
+  </mgl-markers-for-clusters>
+</mgl-map>

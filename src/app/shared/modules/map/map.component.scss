@@ -1,0 +1,23 @@
+
+
+:host {
+  width: 100%;
+  height: 100%;
+
+  mgl-map {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+::ng-deep {
+  .mat-mdc-menu-panel.mat-mdc-menu-panel.clear-menu {
+    background: none;
+    box-shadow: none;
+
+    & .mat-mdc-menu-content {
+      background: none;
+      padding: 0;
+    }
+  }
+}

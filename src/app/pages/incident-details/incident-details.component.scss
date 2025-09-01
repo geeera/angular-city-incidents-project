@@ -1,0 +1,27 @@
+.back--btn {
+  //position: absolute;
+  //top: 5vh;
+  //left: 2vw;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem 3rem;
+  box-sizing: border-box;
+
+  .box {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+
+    &.column {
+      flex-direction: column;
+    }
+
+    &.v-start {
+      align-items: flex-start;
+    }
+  }
+}

@@ -1,1 +1,51 @@
-<p>incident-details works!</p>
+<button
+  mat-fab
+  class="back--btn blur"
+  routerLink="/"
+>
+  <mat-icon>keyboard_backspace</mat-icon>
+</button>
+
+<div class="container">
+  <mat-card style="width: max-content;" appearance="outlined">
+    @if (viewData$ | async; as viewData) {
+      <mat-card-header>
+        <div mat-card-avatar [class]="'severity-' + viewData.incident.severity">
+          <mat-icon>{{ ICONS_MAP[viewData.incident.iconCategory] }}</mat-icon>
+        </div>
+        <mat-card-title>{{ viewData.incident.title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="wrapper">
+          <div class="box">
+            <h3>Category:</h3> <span>{{ viewData.incident.category }}</span>
+          </div>
+          <div class="box">
+            <h3>Severity: </h3> <span>{{ viewData.incident.severity }}/5</span>
+          </div>
+          <div class="box">
+            <h3>Created at: </h3> <span>{{ viewData.incident.createdAt | date : 'medium' }}</span>
+          </div>
+
+          <div class="box column v-start">
+            <h3>Location: </h3>
+            <div class="box column v-start">
+              <span>Lat - {{ viewData.incident.location.lat }}</span>
+              <span>Lng - {{ viewData.incident.location.lng }}</span>
+            </div>
+          </div>
+
+          <div>
+            <h3>Description: </h3>
+            <p>
+              {{ viewData.incident.description }}
+            </p>
+          </div>
+        </div>
+      </mat-card-content>
+    }
+  </mat-card>
+</div>
+
+
+
