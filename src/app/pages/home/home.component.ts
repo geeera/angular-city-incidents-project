@@ -8,6 +8,7 @@ import { AsyncPipe } from '@angular/common';
 import { IncidentsFilter, ReturnFilterData } from '../../shared/modules/incidents-filter/incidents-filter';
 import { MatFabButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'ci-home',
@@ -18,6 +19,7 @@ import { MatIcon } from '@angular/material/icon';
     IncidentsFilter,
     MatFabButton,
     MatIcon,
+    MatProgressSpinner,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

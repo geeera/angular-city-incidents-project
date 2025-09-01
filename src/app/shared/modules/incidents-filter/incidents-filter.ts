@@ -10,7 +10,6 @@ import { MatInput } from '@angular/material/input';
 import {
   MatDatepickerModule,
 } from '@angular/material/datepicker';
-import { NgxMaskDirective } from 'ngx-mask';
 
 type FilterData = Partial<{
   category: string[];
@@ -53,11 +52,11 @@ export class IncidentsFilter {
   @ViewChild(MatMenu) menu!: MatMenu;
   @Output() filteredApply = new EventEmitter<FilterData>();
   form = new FormGroup({
-    category: new FormControl(),
+    category: new FormControl<string[] | null>(null),
     severity: new FormControl<number | null>(null, [Validators.min(1), Validators.max(5)]),
     range: new FormGroup({
-      from: new FormControl(null),
-      to: new FormControl(null)
+      from: new FormControl<Date | null>(null),
+      to: new FormControl<Date | null>(null)
     }),
   })
 

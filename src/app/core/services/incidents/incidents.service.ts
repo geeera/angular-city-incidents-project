@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { algoliasearch } from 'algoliasearch';
 import { map, Observable } from 'rxjs';
 
 export interface IIncident {
@@ -36,8 +35,6 @@ export const ICONS_MAP: Record<number, string> = {
 })
 export class IncidentsService {
   private http = inject(HttpClient);
-  private nextPageToken?: string;
-  private client = algoliasearch(environment.algoliasearchConfig.appId, environment.algoliasearchConfig.searchOnlyKey);
 
   constructor() { }
 
@@ -61,16 +58,11 @@ export class IncidentsService {
     return this.http.get(environment.firebaseConfig.cloudStoreUrl + '/incidents').pipe(
       map((collection: any) => {
         const incidents: Record<string, IIncident>[] = collection.documents;
-        this.initAlgoliaSearch(incidents as any);
         return incidents.map((incidentRecord) => {
           return this.parseFirestoreDoc(incidentRecord)
         });
       })
     );
-  }
-
-  listOfIncidentsByPagination$(pageSize: number = 10) {
-    return this.http.get(`${environment.firebaseConfig.cloudStoreUrl}/incidents?pageSize=${pageSize}&nextPageSize=${this.nextPageToken}`);
   }
 
   loadIncidentById$(id: string): Observable<IIncident> {
@@ -80,9 +72,5 @@ export class IncidentsService {
         return this.parseFirestoreDoc(doc);
       })
     )
-  }
-
-  async initAlgoliaSearch(incidents: Record<string, IIncident>[]) {
-    return await this.client.saveObjects({ indexName: 'incidents_index', objects: incidents });
   }
 }
