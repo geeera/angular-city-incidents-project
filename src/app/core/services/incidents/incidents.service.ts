@@ -55,7 +55,7 @@ export class IncidentsService {
   }
 
   listOfAllIncidents$(): Observable<IIncident[]> {
-    return this.http.get(environment.firebaseConfig.cloudStoreUrl + '/incidents').pipe(
+    return this.http.get(environment.firebaseCloudStoreUrl + '/incidents').pipe(
       map((collection: any) => {
         const incidents: Record<string, IIncident>[] = collection.documents;
         return incidents.map((incidentRecord) => {
@@ -66,7 +66,7 @@ export class IncidentsService {
   }
 
   loadIncidentById$(id: string): Observable<IIncident> {
-    return this.http.get(`${environment.firebaseConfig.cloudStoreUrl}/incidents/${id}`).pipe(
+    return this.http.get(`${environment.firebaseCloudStoreUrl}/incidents/${id}`).pipe(
       map(doc => {
         console.log(doc);
         return this.parseFirestoreDoc(doc);

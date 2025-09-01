@@ -5,7 +5,7 @@ import { routes } from './app.routes';
 import { provideMapboxGL } from 'ngx-mapbox-gl';
 import { environment } from '../environments/environment';
 import { provideAuthInterceptor } from './core/interceptors/auth.interceptor';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { provideNgxMask } from 'ngx-mask';
 
@@ -16,8 +16,10 @@ export const appConfig: ApplicationConfig = {
     provideMapboxGL({
       accessToken: environment.mapboxGLAccessToken
     }),
-    provideHttpClient(),
-    provideAuthInterceptor(),
+    provideHttpClient(
+      // withInterceptorsFromDi()
+    ),
+    // provideAuthInterceptor(),
     provideNativeDateAdapter(),
     provideNgxMask()
   ],

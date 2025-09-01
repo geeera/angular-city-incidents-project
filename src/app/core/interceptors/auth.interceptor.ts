@@ -9,6 +9,11 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { SnackbarService } from '../services/snackbar/snackbar.service';
 
+/*
+* This interceptor not work correctly, such as
+* firebase don't allow request authorization with bearer token.
+* */
+
 export const provideAuthInterceptor = () => {
   return {
     provide: HTTP_INTERCEPTORS,

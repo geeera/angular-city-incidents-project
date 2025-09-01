@@ -2,13 +2,15 @@ import { Component, inject, OnInit } from '@angular/core';
 import { MapComponent } from '../../shared/modules/map/map.component';
 import { IncidentsTableComponent } from '../../shared/modules/incidents-table/incidents-table.component';
 import { IIncident, IncidentsService } from '../../core/services/incidents/incidents.service';
-import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, combineLatest, map, Observable, throwError } from 'rxjs';
 import { calculateCenter } from '../../shared/utils/geo/functions/calc-center';
 import { AsyncPipe } from '@angular/common';
 import { IncidentsFilter, ReturnFilterData } from '../../shared/modules/incidents-filter/incidents-filter';
 import { MatFabButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { HttpErrorResponse } from '@angular/common/http';
+import { SnackbarService } from '../../core/services/snackbar/snackbar.service';
 
 @Component({
   selector: 'ci-home',
@@ -26,6 +28,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 })
 export class HomeComponent implements OnInit {
   private incidentsService = inject(IncidentsService);
+  private snackbarService = inject(SnackbarService);
   viewData$!: Observable<{
     filteredIncidents: IIncident[];
     center: [number, number];
@@ -44,7 +47,12 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    const incidents$ = this.incidentsService.listOfAllIncidents$();
+    const incidents$ = this.incidentsService.listOfAllIncidents$().pipe(
+      catchError((error: HttpErrorResponse) => {
+        this.snackbarService.openErrorSnack(error.message || 'Loading was failed');
+        return throwError(error);
+      })
+    );
     const filteredIncidents$ = combineLatest([incidents$, this.filter$]).pipe(
       map(([incidents, filters]) => {
         return incidents.filter((incident) => {

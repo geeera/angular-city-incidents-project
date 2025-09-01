@@ -22,7 +22,7 @@ export class SnackbarService {
     this._snackbar.openFromComponent(SnackbarComponent, {
       panelClass: 'error',
       data: { message, icon: 'sentiment_very_dissatisfied' },
-      duration: 2500,
+      duration: 5000,
     })
   }
 }
